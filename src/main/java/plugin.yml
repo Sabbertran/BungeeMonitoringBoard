@@ -1,0 +1,12 @@
+name: BungeeMonitoringBoard
+main: de.sabbertran.bungeemonitoringboard.BungeeMonitoringBoard
+version: 1.1
+website: http://www.sabbertran.de/
+author: Sabbertran
+description: Show you player statistics and tps in the scoreboard
+commands:
+  bungeemonitoringboard:
+    description: BungeeMonitoringBoard Command
+    usage: "/bungeemonitoringboard"
+    aliases: [bmb]
+    
