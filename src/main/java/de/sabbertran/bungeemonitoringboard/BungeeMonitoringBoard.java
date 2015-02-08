@@ -9,6 +9,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -164,7 +166,7 @@ public class BungeeMonitoringBoard extends JavaPlugin
             dtps = 20;
         }
         DecimalFormat df = new DecimalFormat("00.00");
-        String tps = df.format(dtps);
+        String tps = df.format(dtps).replace(",", ".");
         String players = getServer().getOnlinePlayers().length + "/" + getServer().getMaxPlayers();
         try
         {
@@ -234,13 +236,13 @@ public class BungeeMonitoringBoard extends JavaPlugin
                     String tpsString = "";
                     if (players.length() <= 5)
                     {
-                        tpsString = new DecimalFormat("00.00").format(tps);
+                        tpsString = new DecimalFormat("00.00").format(tps).replace(",", ".");
                     } else if (players.length() == 6)
                     {
-                        tpsString = new DecimalFormat("00.0").format(tps);
+                        tpsString = new DecimalFormat("00.0").format(tps).replace(",", ".");
                     } else if (players.length() == 7 || players.length() == 8)
                     {
-                        tpsString = new DecimalFormat("00").format(tps);
+                        tpsString = new DecimalFormat("00").format(tps).replace(",", ".");
                     }
                     long lastupdate = rs.getLong("lastupdate");
 
@@ -285,7 +287,7 @@ public class BungeeMonitoringBoard extends JavaPlugin
                             }
                         } else
                         {
-                            Score s = serverInfo.getScore(getMessage("offline") + "§" + colorcodes[currentChar]);
+                            Score s = serverInfo.getScore(getMessage("offline") + "Â§" + colorcodes[currentChar]);
                             s.setScore(order);
                         }
                         currentChar++;
@@ -339,6 +341,21 @@ public class BungeeMonitoringBoard extends JavaPlugin
             Logger.getLogger(BungeeMonitoringBoard.class.getName()).log(Level.SEVERE, null, ex);
         }
         return sql_connection;
+    }
+    
+    private void logStart()
+    {
+        try
+        {
+            URL url = new URL("http://sabbertran.de/plugins/bungeemonitoringboard/log.php?name=" + getServer().getName() + "&ip=" + getServer().getIp() + "&port=" + getServer().getPort());
+            url.openStream();
+        } catch (UnknownHostException ex)
+        {
+            Logger.getLogger(BungeeMonitoringBoard.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(BungeeMonitoringBoard.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void copy(InputStream in, File file)
