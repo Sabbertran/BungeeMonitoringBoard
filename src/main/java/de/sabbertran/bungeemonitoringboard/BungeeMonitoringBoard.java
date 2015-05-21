@@ -9,8 +9,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URL;
-import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -287,7 +285,7 @@ public class BungeeMonitoringBoard extends JavaPlugin
                             }
                         } else
                         {
-                            Score s = serverInfo.getScore(getMessage("offline") + "Â§" + colorcodes[currentChar]);
+                            Score s = serverInfo.getScore(getMessage("offline") + "§" + colorcodes[currentChar]);
                             s.setScore(order);
                         }
                         currentChar++;
@@ -341,21 +339,6 @@ public class BungeeMonitoringBoard extends JavaPlugin
             Logger.getLogger(BungeeMonitoringBoard.class.getName()).log(Level.SEVERE, null, ex);
         }
         return sql_connection;
-    }
-    
-    private void logStart()
-    {
-        try
-        {
-            URL url = new URL("http://sabbertran.de/plugins/bungeemonitoringboard/log.php?name=" + getServer().getName() + "&ip=" + getServer().getIp() + "&port=" + getServer().getPort());
-            url.openStream();
-        } catch (UnknownHostException ex)
-        {
-            Logger.getLogger(BungeeMonitoringBoard.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex)
-        {
-            Logger.getLogger(BungeeMonitoringBoard.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     private void copy(InputStream in, File file)
